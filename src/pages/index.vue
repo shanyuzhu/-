@@ -172,30 +172,31 @@
         </div>
         <div class="product-list">
           <div class="product-list-item" v-for="(arr,i) in productlist" :key="i">
-             <div class="item" v-for="(item,j) in arr" v-bind:key="j">
-                <span :class="{'new-pro':j%2==0}">新品</span>
-                <a :href="'/#/product/'+item.id" class="item-img" target="_blank">
-                  <img v-lazy="item.mainImage" alt="">
-                </a>
-                <div class="item-info">
-                  <a :href="'/#/product/'+item.id" target="_blank">{{item.name}}</a >
-                  <a :href="'/#/product/'+item.id" target="_blank">{{item.subtitle}}</a>
-                  <p class="price" @click="addCart(item.id)">{{item.price}}元</p>
-                </div>
+            <div class="item" v-for="(item,j) in arr" v-bind:key="j">
+              <span :class="{'new-pro':j%2==0}">新品</span>
+              <a :href="'/#/product/'+item.id" class="item-img" target="_blank">
+                <img v-lazy="item.mainImage" alt />
+              </a>
+              <div class="item-info">
+                <a :href="'/#/product/'+item.id" target="_blank">{{item.name}}</a>
+                <a :href="'/#/product/'+item.id" target="_blank">{{item.subtitle}}</a>
+                <p class="price" v-if="!username" @click="Nologin()">{{item.price}}元</p>
+                <p class="price" v-if="username" @click="addCart(item.id)">{{item.price}}元</p>
               </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <modal
-        title="添加购物车"
-        btnType="1" 
-        sureText='查看购物车'
-        modalType="middle" 
-        :showModal="showModal"
-        @submit="goToCart"
-        @cancel="showModal=false"
-      >
+      title="添加购物车"
+      btnType="1"
+      sureText="查看购物车"
+      modalType="middle"
+      :showModal="showModal"
+      @submit="goToCart"
+      @cancel="showModal=false"
+    >
       <template v-slot:body>
         <p>商品添加成功</p>
       </template>
@@ -217,6 +218,7 @@ export default {
   directives: {
     swiper: directive
   },
+
   data() {
     return {
       swiperOptions: {
@@ -229,7 +231,6 @@ export default {
         },
         pagination: {
           el: ".swiper-pagination",
-          //   bulletActiveClass: "my-bullet-active",
           clickable: true
         },
         navigation: {
@@ -307,39 +308,44 @@ export default {
         }
       ],
       productlist: [],
-      showModal:false
+      showModal: false
     };
   },
-  mounted(){
-    this.init()
+  mounted() {
+    this.init();
   },
-  methods:{
-    init(){
-      this.axios.get('/products',{
-        params:{
-          categoryId:100012,
-          pageSize:14
-        }
-      }).then((res)=>{
-        res.list = res.list.slice(6,14);
-        this.productlist = [res.list.slice(0,4),res.list.slice(4,8)];
-      })
+  methods: {
+    init() {
+      this.axios
+        .get("/products", {
+          params: {
+            categoryId: 100012,
+            pageSize: 14
+          }
+        })
+        .then(res => {
+          res.list = res.list.slice(6, 14);
+          this.productlist = [res.list.slice(0, 4), res.list.slice(4, 8)];
+        });
     },
-    addCart(id){
-      this.axios.post('/carts',{
-        productId:id,
-        selected: true
-      }).then((res)=>{
-        this.showModal = true;
-        this.$store.dispatch('saveCartCount',res.cartTotalQuantity);
-      });
+    addCart(id) {
+      this.axios
+        .post("/carts", {
+          productId: id,
+          selected: true
+        })
+        .then(res => {
+          this.showModal = true;
+          this.$store.dispatch("saveCartCount", res.cartTotalQuantity);
+        });
     },
-    goToCart(){
-      this.$router.push('/cart')
+    Nologin() {
+      this.$message.warning("未登录");
+    },
+    goToCart() {
+      this.$router.push("/cart");
     }
-  },
-  
-  
+  }
 };
 </script>
 
@@ -418,7 +424,7 @@ export default {
               line-height: 75px;
 
               a {
-                color:$colorB;
+                color: $colorB;
                 img {
                   width: 35px;
                   height: 42px;
@@ -501,11 +507,11 @@ export default {
           display: flex;
           justify-content: space-between;
           text-align: center;
-       
-          .item{
+
+          .item {
             width: 236px;
             height: 302px;
-            color:$colorB;
+            color: $colorB;
             span {
               display: inline-block;
               width: 67px;
@@ -527,22 +533,22 @@ export default {
             }
             .item-info {
               a {
-                display:inline-block;
+                display: inline-block;
                 width: 236px;
                 line-height: 24px;
                 color: $colorB;
                 font-size: 14px;
-                &:last-child{
+                &:last-child {
                   width: 236px;
                   line-height: 15px;
                   color: $colorD;
                   font-size: 14px;
                 }
               }
-              
+
               .price {
                 color: #f20a0a;
-                
+
                 cursor: pointer;
                 &:after {
                   @include bgImg(22px, 22px, "/imgs/icon-cart-hover.png");

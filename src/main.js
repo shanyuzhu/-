@@ -8,6 +8,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import router from './router'
 import App from './App.vue'
 import store from './store'
+import indexVue from './pages/index'
 const mock = false;
 if (mock) {
   require('./mock/api')
@@ -19,11 +20,13 @@ axios.interceptors.response.use(function (response) {
   let res = response.data
   let path = location.hash
   if (res.status == 0) {
+
     return res.data
   } else if (res.status == 10) {
     if (path != '#/index') {
       window.location.href = '/#/login'
     }
+
 
     return Promise.reject(res)
   } else {
@@ -47,6 +50,7 @@ Vue.config.productionTip = false
 
 
 new Vue({
+  indexVue,
   store,
   router,
   render: h => h(App),
