@@ -7,21 +7,25 @@
     </product-param>
     <div class="content">
       <div class="item-bg">
-        <h2>{{product.name}}</h2>
-        <h3>{{product.subtitle}}</h3>
-        <p>
-          <a href="" id="">全球首款双频 GP</a>
-          <span>|</span>
-          <a href="" id="">骁龙845</a>
-          <span>|</span>
-          <a href="" id="">AI 变焦双摄</a>
-          <span>|</span>
-          <a href="" id="">红外人脸识别</a>
-        </p>
+
+        <div class="info-text">
+          <h2>{{product.name}}</h2>
+          <h3>{{product.subtitle}}</h3>
+          <p>
+            <a href="" id="">全球首款双频 GP</a>
+            <span>|</span>
+            <a href="" id="">骁龙865</a>
+            <span>|</span>
+            <a href="" id="">红外人脸识别</a>
+          </p>
         <div class="price">
           <span>￥<em>{{product.price}}</em></span>
         </div>
+        </div>
+        
+        <div class="bg-info-img"></div>
       </div>
+      
       <div class="item-bg-2"></div>
       <div class="item-bg-3"></div>
       <div class="item-swiper">
@@ -106,35 +110,54 @@
   .product{
     .content{
       .item-bg{
-        background:url('/imgs/product/product-bg-1.png') no-repeat center;
+        background:url('/imgs/product/bg.jpg') no-repeat center;
         height:718px;
         text-align:center;
-        h2{
-          font-size:80px;
-          padding-top:55px;
-        }
-        h3{
-          font-size:24px;
-          letter-spacing: 10px;
-        }
-        p{
-          margin-top:21px;
-          margin-bottom:40px;
-          a{
-            font-size:16px;
-            color:$colorB;
+        display:flex;
+        justify-content:space-around;
+        padding:8% 20%;
+        box-sizing:border-box;
+        .info-text{
+          height:718px;
+          color:$colorG;
+          text-align:left;
+          h2{
+            font-size:40px;
+            padding-top:55px;
+            font-weight:600;
           }
-          span{
-            margin:0 15px;
+          h3{
+            font-size:50px;
+            letter-spacing: 10px;
+            font-weight:400;
+          }
+          p{
+            margin-top:21px;
+            margin-bottom:40px;
+            a{
+              font-size:16px;
+              color:$colorG;
+            }
+            span{
+              margin:0 15px;
+            }
+          }
+          .price{
+            font-size:30px;
+            color:$colorG;
+            em{
+              font-style:normal;
+              font-size:38px;
+            }
           }
         }
-        .price{
-          font-size:30px;
-          color:$colorB;
-          em{
-            font-style:normal;
-            font-size:38px;
-          }
+        
+        .bg-info-img{
+          background:url('/imgs/product/index0_1.png') no-repeat center;
+          height:400px;
+          width:40%;
+        
+          background-size:contain;
         }
       }
       .item-bg-2{
@@ -143,7 +166,7 @@
         background-size:1226px 397px;
       }
       .item-bg-3{
-        background:url(/imgs/product/product-bg-3.png) no-repeat center;
+        background:url(/imgs/product/image2.jpg) no-repeat center;
         height:638px;
         background-size:cover;
       }
